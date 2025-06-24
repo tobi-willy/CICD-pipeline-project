@@ -85,11 +85,11 @@ jobs:
             with:
               context: .
               push: false
-              tags: ${{vars.DOCKER_USERNAME}}/node-web-app:${{github.sha}}
+              tags: ${{vars.DOCKER_USERNAME}}/node-web-app:v2
               
           - name: Run Docker Container
             run: |
-             docker run -d --name node-web-app -p 3000:3000 ${{vars.DOCKER_USERNAME}}/node-web-app:${{github.sha}}
+             docker run -d --name node-web-app -p 3000:3000 ${{vars.DOCKER_USERNAME}}/node-web-app:v2
              
              echo "Sleeping to allow the app to start..."
              sleep 5
@@ -102,6 +102,9 @@ jobs:
             with:
               context: .
               push: true
-              tags: ${{vars.DOCKER_USERNAME}}/solar-system:${{github.sha}}
+              tags: ${{vars.DOCKER_USERNAME}}/solar-system:v2
+
+         
+
 
 
