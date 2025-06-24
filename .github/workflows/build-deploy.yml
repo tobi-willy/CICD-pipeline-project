@@ -25,7 +25,7 @@ jobs:
             run: npm install
 
           - name: Unit testing
-            id: node-js-testing-modules
+            id: node-js-testing-setup
             run: npm test
 
           - name: Archive test result
@@ -36,4 +36,4 @@ jobs:
              path: test-results.xml
              
 
-             
+
