@@ -67,6 +67,30 @@ jobs:
              path: coverage
              retention-days: 5
 
-             
+    docker:
+        needs: [build, coverage]
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Repo
+            run: actions/checkout@v4
+
+          - name: Dockerhub login
+            uses: docker/login-action@v3
+            with:
+                username: ${{vars.DOCKER_USERNAME}}
+                password: ${{secrets.DOCKER_PASSWORD}}
+
+          - name: Docker Build
+            uses: docker/build-push-action@v6
+            with:
+              context: .
+              tags: ${{vars.DOCKER_USERNAME}}/node-web-app:${{github.sha}}
+              
+          - name: Run Docker Container
+            run: |
+             docker run -d --name node-web-app -p 3000:3000 ${{vars.DOCKER_USERNAME}}/node-web-app:${{github.sha}}
+
+             echo Testing local app endpoint...
+             wget -q -O - 127.0.0.1:3000 | grep "Hello"
 
 
