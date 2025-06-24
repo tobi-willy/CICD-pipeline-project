@@ -72,7 +72,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: Checkout Repo
-            run: actions/checkout@v4
+            uses: actions/checkout@v4
 
           - name: Dockerhub login
             uses: docker/login-action@v3
