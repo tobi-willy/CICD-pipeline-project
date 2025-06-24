@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node index.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "coverage": "jest --coverage"
 
   },
   "keywords": [],
