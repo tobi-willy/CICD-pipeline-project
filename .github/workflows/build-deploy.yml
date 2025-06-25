@@ -102,7 +102,7 @@ jobs:
             with:
               context: .
               push: true
-              tags: ${{vars.DOCKER_USERNAME}}/solar-system:v2
+              tags: ${{vars.DOCKER_USERNAME}}/node-web-app:v2
 
          
 
