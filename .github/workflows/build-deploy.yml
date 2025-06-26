@@ -74,10 +74,10 @@ jobs:
         needs: [build, coverage]
         uses: ./.github/workflows/reuse-deployment.yml
         with:
-          image-name: ${{ vars.DOCKER_USERNAME }}/node-web-app
+          image-name: node-web-app
           image-tag: v2
         secrets:
-          docker-username: ${{ vars.DOCKER_USERNAME }}
+          docker-username: ${{ secrets.DOCKER_USERNAME }}
           docker-password: ${{ secrets.DOCKER_PASSWORD }}
 
     prod-docker:
@@ -85,8 +85,8 @@ jobs:
         needs: [build, coverage]
         uses: ./.github/workflows/reuse-deployment.yml
         with:
-          image-name: ${{ vars.DOCKER_USERNAME }}/node-web-app
+          image-name: node-web-app
           image-tag: v2
         secrets:
-          docker-username: ${{ vars.DOCKER_USERNAME }}
+          docker-username: ${{ secrets.DOCKER_USERNAME }}
           docker-password: ${{ secrets.DOCKER_PASSWORD }}
