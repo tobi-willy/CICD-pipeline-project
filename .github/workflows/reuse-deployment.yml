@@ -1,0 +1,54 @@
+name: Reusable deployment
+
+on:
+    workflow_call: 
+      inputs:
+        image-name:
+          required: true
+          type: string
+        image-tag:
+          required: true
+          type: string
+      secrets:
+        docker-username:
+          required: true
+        docker-password:
+          required: true
+
+    
+jobs:
+    docker-build:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Repo
+            uses: actions/checkout@v4
+
+          - name: Dockerhub login
+            uses: docker/login-action@v3
+            with:
+                username: ${{secrets.docker-username}}
+                password: ${{secrets.docker-password}}
+
+          - name: Docker Build
+            uses: docker/build-push-action@v6
+            with:
+              context: .
+              push: false
+              tags: ${{secrets.docker-username}}/${{inputs.image-name}}:${{inputs.image-tag}}
+              
+          - name: Run Docker Container
+            run: |
+             docker run -d --name node-web-app -p 3000:3000 ${{secrets.docker-username}}/${{inputs.image-name}}:${{inputs.image-tag}}
+             
+             echo "Sleeping to allow the app to start..."
+             sleep 5
+
+             echo Testing local app endpoint...
+             wget -q -O - 127.0.0.1:3000 | grep "Welcome to My Node.js Web App"
+
+          - name: Registry push
+            uses: docker/build-push-action@v6
+            with:
+              context: .
+              push: true
+              tags: ${{secrets.docker-username}}/${{inputs.image-name}}:${{inputs.image-tag}}
