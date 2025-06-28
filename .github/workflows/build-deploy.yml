@@ -122,7 +122,8 @@ jobs:
         - name: Update image tag
           run: |
             cd manifest/overlays/dev
-            sed -i "s|newTag: .*|newTag: v2|" kustomization.yml
+            sed -i "s|^[[:space:]]*newTag:.*|newTag: v2|" kustomization.yml
+
 
         - name: Commit and push changes
           run: |
@@ -149,7 +150,8 @@ jobs:
         - name: Update image tag
           run: |
             cd manifest/overlays/prod
-            sed -i "s|^[[:space:]]*newTag: .*|newTag: v2|" kustomization.yml
+            sed -i "s|^[[:space:]]*newTag:.*|newTag: v2|" kustomization.yaml
+
 
         - name: Commit and push changes
           run: |
